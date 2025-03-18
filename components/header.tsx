@@ -88,8 +88,8 @@ export default function Header() {
           <ThemeSwitcher />
 
           <SignedOut>
-            <SignInButton>
-              <Button variant="outline">Login</Button>
+            <SignInButton mode="modal">
+              <Button>Login</Button>
             </SignInButton>
 
             <SignUpButton>
@@ -103,8 +103,6 @@ export default function Header() {
 
           <div className="md:hidden">
             <Button
-              variant="ghost"
-              size="icon"
               onClick={toggleMenu}
               aria-label="Toggle menu"
             >

@@ -80,7 +80,7 @@ Database Schema Design
 Core UI Components
 ------------------
 
--   [ ]  Step 9: Create layout and navigation components
+-   [x]  Step 9: Create layout and navigation components
     -   **Task**: Implement the main layout and navigation components for the application
     -   **Files**:
         -   `src/app/layout.tsx`: Root layout with providers
@@ -91,7 +91,7 @@ Core UI Components
         -   `src/components/layout/NavLinks.tsx`: Navigation links component
     -   **Step Dependencies**: Step 4
     -   **User Instructions**: None
--   [ ]  Step 10: Create UI component library
+-   [x]  Step 10: Create UI component library
     -   **Task**: Build reusable UI components for the kid-friendly interface
     -   **Files**:
         -   `src/components/ui/Button.tsx`: Custom button component
@@ -104,7 +104,7 @@ Core UI Components
         -   `src/components/ui/Modal.tsx`: Modal dialog component
     -   **Step Dependencies**: Step 9
     -   **User Instructions**: None
--   [ ]  Step 11: Create form components
+-   [x]  Step 11: Create form components
     -   **Task**: Build reusable form components with validation using react-hook-form and zod
     -   **Files**:
         -   `src/components/forms/FormField.tsx`: Reusable form field component
@@ -119,7 +119,7 @@ Core UI Components
 Authentication and User Management
 ----------------------------------
 
--   [ ]  Step 12: Implement sign-up form and page
+-   [x]  Step 12: Implement sign-up form and page
     -   **Task**: Create the sign-up page with age-appropriate registration form
     -   **Files**:
         -   `src/app/(auth)/signup/page.tsx`: Signup page
@@ -128,7 +128,7 @@ Authentication and User Management
         -   `src/server/actions/auth.ts`: Server action for user registration
     -   **Step Dependencies**: Steps 4, 11
     -   **User Instructions**: None
--   [ ]  Step 13: Implement login form and page
+-   [x]  Step 13: Implement login form and page
     -   **Task**: Create the login page with email and social login options
     -   **Files**:
         -   `src/app/(auth)/login/page.tsx`: Login page
@@ -137,29 +137,11 @@ Authentication and User Management
         -   `src/server/actions/login.ts`: Server action for user login
     -   **Step Dependencies**: Step 12
     -   **User Instructions**: None
--   [ ]  Step 14: Implement authentication middleware and protected routes
-    -   **Task**: Set up middleware to protect routes that require authentication
-    -   **Files**:
-        -   `src/middleware.ts`: NextAuth middleware configuration
-        -   `src/lib/auth-utils.ts`: Authentication utility functions
-        -   `src/components/auth/AuthGuard.tsx`: Component for conditional rendering based on auth state
-    -   **Step Dependencies**: Step 13
-    -   **User Instructions**: None
--   [ ]  Step 15: Create user profile page and components
-    -   **Task**: Implement user profile page with editable fields and location settings
-    -   **Files**:
-        -   `src/app/(protected)/profile/page.tsx`: Profile page
-        -   `src/components/profile/ProfileForm.tsx`: Profile edit form
-        -   `src/components/profile/LocationInput.tsx`: Location input component
-        -   `src/server/actions/profile.ts`: Server action for updating user profile
-        -   `src/lib/validations/profile.ts`: Profile validation schemas
-    -   **Step Dependencies**: Step 14
-    -   **User Instructions**: None
 
 Game Management
 ---------------
 
--   [ ]  Step 16: Implement IGDB API integration
+-   [x]  Step 14: Implement IGDB API integration
     -   **Task**: Create service to integrate with IGDB API for game data
     -   **Files**:
         -   `src/lib/igdb/client.ts`: IGDB API client configuration
@@ -168,16 +150,16 @@ Game Management
         -   `src/server/api/igdb/route.ts`: API route to proxy IGDB requests
     -   **Step Dependencies**: Step 2
     -   **User Instructions**: Ensure your IGDB API credentials are correctly set in the `.env` file
--   [ ]  Step 17: Create game search and auto-complete component
+-   [ ]  Step 15: Create game search and auto-complete component
     -   **Task**: Build game search component with auto-complete using IGDB API
     -   **Files**:
         -   `src/components/games/GameSearch.tsx`: Game search component
         -   `src/components/games/GameAutoComplete.tsx`: Auto-complete dropdown component
         -   `src/app/api/games/search/route.ts`: API route for game search
         -   `src/hooks/useGameSearch.ts`: Custom hook for game search functionality
-    -   **Step Dependencies**: Step 16
+    -   **Step Dependencies**: Step 14
     -   **User Instructions**: None
--   [ ]  Step 18: Implement game collection management
+-   [ ]  Step 16: Implement game collection management
     -   **Task**: Create game collection management for users to add/remove games
     -   **Files**:
         -   `src/app/(protected)/collection/page.tsx`: Collection management page
@@ -185,9 +167,9 @@ Game Management
         -   `src/components/collection/CollectionItem.tsx`: Individual game item component
         -   `src/server/actions/collection.ts`: Server actions for collection management
         -   `src/lib/validations/collection.ts`: Collection validation schemas
-    -   **Step Dependencies**: Steps 15, 17
+    -   **Step Dependencies**: Steps 13, 15
     -   **User Instructions**: None
--   [ ]  Step 19: Create game listing form
+-   [ ]  Step 17: Create game listing form
     -   **Task**: Implement form for users to list games for trading
     -   **Files**:
         -   `src/app/(protected)/collection/list/page.tsx`: List game page
@@ -195,22 +177,22 @@ Game Management
         -   `src/components/games/ConditionSelect.tsx`: Game condition selector
         -   `src/components/games/PlatformSelect.tsx`: Platform selector component
         -   `src/server/actions/listings.ts`: Server actions for game listings
-    -   **Step Dependencies**: Step 18
+    -   **Step Dependencies**: Step 16
     -   **User Instructions**: None
--   [ ]  Step 20: Implement image upload for game listings
+-   [ ]  Step 18: Implement image upload for game listings
     -   **Task**: Create image upload functionality for game listings with Supabase storage
     -   **Files**:
         -   `src/components/games/ImageUpload.tsx`: Image upload component
         -   `src/lib/utils/image-upload.ts`: Image upload utility functions
         -   `src/server/actions/uploads.ts`: Server actions for image upload
         -   `src/app/api/upload/route.ts`: API route for handling uploads
-    -   **Step Dependencies**: Step 19
+    -   **Step Dependencies**: Step 17
     -   **User Instructions**: Create a storage bucket in Supabase called 'game-images' and configure the following RLS policy: `CREATE POLICY "Authenticated users can upload images" ON storage.objects FOR INSERT TO authenticated USING (bucket_id = 'game-images' AND auth.uid() = owner);`
 
 Trading System
 --------------
 
--   [ ]  Step 21: Create game listing display and details page
+-   [ ]  Step 19: Create game listing display and details page
     -   **Task**: Implement pages to display available games and individual game details
     -   **Files**:
         -   `src/app/(protected)/games/page.tsx`: Browse games page
@@ -218,9 +200,9 @@ Trading System
         -   `src/components/games/GameCard.tsx`: Game card component
         -   `src/components/games/GameDetails.tsx`: Game details component
         -   `src/server/queries/games.ts`: Server queries for game data
-    -   **Step Dependencies**: Steps 18, 19, 20
+    -   **Step Dependencies**: Steps 16, 17, 18
     -   **User Instructions**: None
--   [ ]  Step 22: Implement search and filter functionality
+-   [ ]  Step 20: Implement search and filter functionality
     -   **Task**: Create search and filter components for finding games
     -   **Files**:
         -   `src/components/search/SearchFilters.tsx`: Search filters component
@@ -228,9 +210,9 @@ Trading System
         -   `src/components/search/PlatformFilter.tsx`: Platform filter component
         -   `src/hooks/useSearchParams.ts`: Custom hook for managing search parameters
         -   `src/server/actions/search.ts`: Server actions for search functionality
-    -   **Step Dependencies**: Step 21
+    -   **Step Dependencies**: Step 19
     -   **User Instructions**: None
--   [ ]  Step 23: Create trade request system
+-   [ ]  Step 21: Create trade request system
     -   **Task**: Implement trade request functionality between users
     -   **Files**:
         -   `src/components/trades/TradeRequestButton.tsx`: Trade request button component
@@ -238,9 +220,9 @@ Trading System
         -   `src/components/trades/SelectGamesList.tsx`: Component to select games to offer
         -   `src/server/actions/trades.ts`: Server actions for trade requests
         -   `src/lib/validations/trades.ts`: Trade validation schemas
-    -   **Step Dependencies**: Step 21
+    -   **Step Dependencies**: Step 19
     -   **User Instructions**: None
--   [ ]  Step 24: Implement trade management page
+-   [ ]  Step 22: Implement trade management page
     -   **Task**: Create page for users to manage their trade requests
     -   **Files**:
         -   `src/app/(protected)/trades/page.tsx`: Trade management page
@@ -248,9 +230,9 @@ Trading System
         -   `src/components/trades/TradeCard.tsx`: Trade request card component
         -   `src/components/trades/TradeActions.tsx`: Trade action buttons (accept/decline)
         -   `src/server/queries/trades.ts`: Server queries for trade data
-    -   **Step Dependencies**: Step 23
+    -   **Step Dependencies**: Step 21
     -   **User Instructions**: None
--   [ ]  Step 25: Implement messaging system
+-   [ ]  Step 23: Implement messaging system
     -   **Task**: Create messaging system for users to communicate about trades
     -   **Files**:
         -   `src/app/(protected)/messages/page.tsx`: Messages page
