@@ -12,8 +12,6 @@ import postgres from "postgres"
 config({ path: ".env.local" })
 
 const schema = {
-  profiles: profilesTable,
-  todos: todosTable
 }
 
 const client = postgres(process.env.DATABASE_URL!)

@@ -1,0 +1,352 @@
+Implementation Plan
+===================
+
+Project Setup and Configuration
+-------------------------------
+
+-   [ ]  Step 1: Initialize Next.js project with TypeScript and Tailwind CSS
+    -   **Task**: Create a new Next.js project with TypeScript support, configure Tailwind CSS, and set up the basic project structure
+    -   **Files**:
+        -   `package.json`: Dependencies configuration
+        -   `tsconfig.json`: TypeScript configuration
+        -   `tailwind.config.ts`: Tailwind configuration
+        -   `postcss.config.js`: PostCSS configuration
+        -   `next.config.js`: Next.js configuration
+        -   `.env.example`: Example environment variables
+        -   `.gitignore`: Git ignore configuration
+    -   **Step Dependencies**: None
+    -   **User Instructions**: Run `npx create-next-app@latest gaming-exchange --typescript --tailwind --eslint --app --src-dir` then install additional dependencies with `npm install drizzle-orm @supabase/supabase-js zod react-hook-form @hookform/resolvers next-auth @nextui-org/react framer-motion`
+-   [ ]  Step 2: Configure environment variables and constants
+    -   **Task**: Set up environment variables for API keys, database connections, and third-party services
+    -   **Files**:
+        -   `.env`: Environment variables file
+        -   `src/config/constants.ts`: Application constants
+        -   `src/config/env.ts`: Environment validation using zod
+    -   **Step Dependencies**: Step 1
+    -   **User Instructions**: Create a Supabase account and project, obtain IGDB API credentials, and add them to your `.env` file following the structure in `.env.example`
+-   [ ]  Step 3: Set up Supabase and Drizzle ORM configuration
+    -   **Task**: Configure Supabase client and Drizzle ORM for database operations
+    -   **Files**:
+        -   `src/lib/supabase.ts`: Supabase client configuration
+        -   `src/lib/db.ts`: Drizzle ORM configuration
+        -   `drizzle.config.ts`: Drizzle configuration file
+    -   **Step Dependencies**: Step 2
+    -   **User Instructions**: None
+-   [ ]  Step 4: Configure NextAuth authentication
+    -   **Task**: Set up NextAuth for email and social login authentication
+    -   **Files**:
+        -   `src/app/api/auth/[...nextauth]/route.ts`: NextAuth API route
+        -   `src/lib/auth.ts`: Auth helpers and types
+        -   `src/components/auth/AuthProvider.tsx`: Auth context provider
+        -   `src/types/next-auth.d.ts`: NextAuth type declarations
+    -   **Step Dependencies**: Step 3
+    -   **User Instructions**: Configure OAuth providers in your Supabase dashboard for social login options
+
+Database Schema Design
+----------------------
+
+-   [ ]  Step 5: Create users and profiles schema
+    -   **Task**: Define user and profile tables schema with Drizzle ORM
+    -   **Files**:
+        -   `src/db/schema/users.ts`: Users and profiles schema definitions
+        -   `src/db/migrations/0000_users_profiles.sql`: SQL migration for users and profiles
+    -   **Step Dependencies**: Step 3
+    -   **User Instructions**: Run `npx drizzle-kit generate:pg` to generate the migration file from the schema
+-   [ ]  Step 6: Create games and platforms schema
+    -   **Task**: Define game tables schema for storing game information and platform types
+    -   **Files**:
+        -   `src/db/schema/games.ts`: Games schema definitions
+        -   `src/db/schema/platforms.ts`: Game platforms enumeration
+        -   `src/db/migrations/0001_games_platforms.sql`: SQL migration for games and platforms
+    -   **Step Dependencies**: Step 5
+    -   **User Instructions**: Run `npx drizzle-kit generate:pg` to generate the migration file from the schema
+-   [ ]  Step 7: Create trades and messages schema
+    -   **Task**: Define trade requests and messaging tables schema
+    -   **Files**:
+        -   `src/db/schema/trades.ts`: Trade requests schema
+        -   `src/db/schema/messages.ts`: Messages schema
+        -   `src/db/migrations/0002_trades_messages.sql`: SQL migration for trades and messages
+    -   **Step Dependencies**: Step 6
+    -   **User Instructions**: Run `npx drizzle-kit generate:pg` to generate the migration file from the schema
+-   [ ]  Step 8: Create notifications schema
+    -   **Task**: Define notifications table schema for email and in-app notifications
+    -   **Files**:
+        -   `src/db/schema/notifications.ts`: Notifications schema
+        -   `src/db/migrations/0003_notifications.sql`: SQL migration for notifications
+        -   `src/db/index.ts`: Export all schema definitions
+    -   **Step Dependencies**: Step 7
+    -   **User Instructions**: Run `npx drizzle-kit generate:pg` to generate the migration file and then `npx drizzle-kit push:pg` to apply all migrations to the database
+
+Core UI Components
+------------------
+
+-   [ ]  Step 9: Create layout and navigation components
+    -   **Task**: Implement the main layout and navigation components for the application
+    -   **Files**:
+        -   `src/app/layout.tsx`: Root layout with providers
+        -   `src/components/layout/Header.tsx`: Header component with navigation
+        -   `src/components/layout/Footer.tsx`: Footer component
+        -   `src/components/layout/Sidebar.tsx`: Sidebar navigation for desktop
+        -   `src/components/layout/MobileNav.tsx`: Mobile navigation menu
+        -   `src/components/layout/NavLinks.tsx`: Navigation links component
+    -   **Step Dependencies**: Step 4
+    -   **User Instructions**: None
+-   [ ]  Step 10: Create UI component library
+    -   **Task**: Build reusable UI components for the kid-friendly interface
+    -   **Files**:
+        -   `src/components/ui/Button.tsx`: Custom button component
+        -   `src/components/ui/Card.tsx`: Card component for game listings
+        -   `src/components/ui/Badge.tsx`: Badge component for status indicators
+        -   `src/components/ui/Avatar.tsx`: Avatar component for user profiles
+        -   `src/components/ui/Input.tsx`: Form input components
+        -   `src/components/ui/Select.tsx`: Select dropdown component
+        -   `src/components/ui/Alert.tsx`: Alert component for notifications
+        -   `src/components/ui/Modal.tsx`: Modal dialog component
+    -   **Step Dependencies**: Step 9
+    -   **User Instructions**: None
+-   [ ]  Step 11: Create form components
+    -   **Task**: Build reusable form components with validation using react-hook-form and zod
+    -   **Files**:
+        -   `src/components/forms/FormField.tsx`: Reusable form field component
+        -   `src/components/forms/FormSelect.tsx`: Form select component
+        -   `src/components/forms/FormTextarea.tsx`: Form textarea component
+        -   `src/components/forms/FormError.tsx`: Form error display component
+        -   `src/components/forms/FormSuccess.tsx`: Form success message component
+        -   `src/lib/validations/index.ts`: Common validation schemas
+    -   **Step Dependencies**: Step 10
+    -   **User Instructions**: None
+
+Authentication and User Management
+----------------------------------
+
+-   [ ]  Step 12: Implement sign-up form and page
+    -   **Task**: Create the sign-up page with age-appropriate registration form
+    -   **Files**:
+        -   `src/app/(auth)/signup/page.tsx`: Signup page
+        -   `src/components/auth/SignUpForm.tsx`: Sign-up form component
+        -   `src/lib/validations/auth.ts`: Authentication form validation schemas
+        -   `src/server/actions/auth.ts`: Server action for user registration
+    -   **Step Dependencies**: Steps 4, 11
+    -   **User Instructions**: None
+-   [ ]  Step 13: Implement login form and page
+    -   **Task**: Create the login page with email and social login options
+    -   **Files**:
+        -   `src/app/(auth)/login/page.tsx`: Login page
+        -   `src/components/auth/LoginForm.tsx`: Login form component
+        -   `src/components/auth/SocialLogin.tsx`: Social login buttons
+        -   `src/server/actions/login.ts`: Server action for user login
+    -   **Step Dependencies**: Step 12
+    -   **User Instructions**: None
+-   [ ]  Step 14: Implement authentication middleware and protected routes
+    -   **Task**: Set up middleware to protect routes that require authentication
+    -   **Files**:
+        -   `src/middleware.ts`: NextAuth middleware configuration
+        -   `src/lib/auth-utils.ts`: Authentication utility functions
+        -   `src/components/auth/AuthGuard.tsx`: Component for conditional rendering based on auth state
+    -   **Step Dependencies**: Step 13
+    -   **User Instructions**: None
+-   [ ]  Step 15: Create user profile page and components
+    -   **Task**: Implement user profile page with editable fields and location settings
+    -   **Files**:
+        -   `src/app/(protected)/profile/page.tsx`: Profile page
+        -   `src/components/profile/ProfileForm.tsx`: Profile edit form
+        -   `src/components/profile/LocationInput.tsx`: Location input component
+        -   `src/server/actions/profile.ts`: Server action for updating user profile
+        -   `src/lib/validations/profile.ts`: Profile validation schemas
+    -   **Step Dependencies**: Step 14
+    -   **User Instructions**: None
+
+Game Management
+---------------
+
+-   [ ]  Step 16: Implement IGDB API integration
+    -   **Task**: Create service to integrate with IGDB API for game data
+    -   **Files**:
+        -   `src/lib/igdb/client.ts`: IGDB API client configuration
+        -   `src/lib/igdb/types.ts`: TypeScript types for IGDB API responses
+        -   `src/lib/igdb/api.ts`: Functions to interact with IGDB API
+        -   `src/server/api/igdb/route.ts`: API route to proxy IGDB requests
+    -   **Step Dependencies**: Step 2
+    -   **User Instructions**: Ensure your IGDB API credentials are correctly set in the `.env` file
+-   [ ]  Step 17: Create game search and auto-complete component
+    -   **Task**: Build game search component with auto-complete using IGDB API
+    -   **Files**:
+        -   `src/components/games/GameSearch.tsx`: Game search component
+        -   `src/components/games/GameAutoComplete.tsx`: Auto-complete dropdown component
+        -   `src/app/api/games/search/route.ts`: API route for game search
+        -   `src/hooks/useGameSearch.ts`: Custom hook for game search functionality
+    -   **Step Dependencies**: Step 16
+    -   **User Instructions**: None
+-   [ ]  Step 18: Implement game collection management
+    -   **Task**: Create game collection management for users to add/remove games
+    -   **Files**:
+        -   `src/app/(protected)/collection/page.tsx`: Collection management page
+        -   `src/components/collection/CollectionList.tsx`: List of user's games
+        -   `src/components/collection/CollectionItem.tsx`: Individual game item component
+        -   `src/server/actions/collection.ts`: Server actions for collection management
+        -   `src/lib/validations/collection.ts`: Collection validation schemas
+    -   **Step Dependencies**: Steps 15, 17
+    -   **User Instructions**: None
+-   [ ]  Step 19: Create game listing form
+    -   **Task**: Implement form for users to list games for trading
+    -   **Files**:
+        -   `src/app/(protected)/collection/list/page.tsx`: List game page
+        -   `src/components/games/ListGameForm.tsx`: Game listing form
+        -   `src/components/games/ConditionSelect.tsx`: Game condition selector
+        -   `src/components/games/PlatformSelect.tsx`: Platform selector component
+        -   `src/server/actions/listings.ts`: Server actions for game listings
+    -   **Step Dependencies**: Step 18
+    -   **User Instructions**: None
+-   [ ]  Step 20: Implement image upload for game listings
+    -   **Task**: Create image upload functionality for game listings with Supabase storage
+    -   **Files**:
+        -   `src/components/games/ImageUpload.tsx`: Image upload component
+        -   `src/lib/utils/image-upload.ts`: Image upload utility functions
+        -   `src/server/actions/uploads.ts`: Server actions for image upload
+        -   `src/app/api/upload/route.ts`: API route for handling uploads
+    -   **Step Dependencies**: Step 19
+    -   **User Instructions**: Create a storage bucket in Supabase called 'game-images' and configure the following RLS policy: `CREATE POLICY "Authenticated users can upload images" ON storage.objects FOR INSERT TO authenticated USING (bucket_id = 'game-images' AND auth.uid() = owner);`
+
+Trading System
+--------------
+
+-   [ ]  Step 21: Create game listing display and details page
+    -   **Task**: Implement pages to display available games and individual game details
+    -   **Files**:
+        -   `src/app/(protected)/games/page.tsx`: Browse games page
+        -   `src/app/(protected)/games/[id]/page.tsx`: Game details page
+        -   `src/components/games/GameCard.tsx`: Game card component
+        -   `src/components/games/GameDetails.tsx`: Game details component
+        -   `src/server/queries/games.ts`: Server queries for game data
+    -   **Step Dependencies**: Steps 18, 19, 20
+    -   **User Instructions**: None
+-   [ ]  Step 22: Implement search and filter functionality
+    -   **Task**: Create search and filter components for finding games
+    -   **Files**:
+        -   `src/components/search/SearchFilters.tsx`: Search filters component
+        -   `src/components/search/LocationFilter.tsx`: Location filter component
+        -   `src/components/search/PlatformFilter.tsx`: Platform filter component
+        -   `src/hooks/useSearchParams.ts`: Custom hook for managing search parameters
+        -   `src/server/actions/search.ts`: Server actions for search functionality
+    -   **Step Dependencies**: Step 21
+    -   **User Instructions**: None
+-   [ ]  Step 23: Create trade request system
+    -   **Task**: Implement trade request functionality between users
+    -   **Files**:
+        -   `src/components/trades/TradeRequestButton.tsx`: Trade request button component
+        -   `src/components/trades/TradeRequestForm.tsx`: Trade request form component
+        -   `src/components/trades/SelectGamesList.tsx`: Component to select games to offer
+        -   `src/server/actions/trades.ts`: Server actions for trade requests
+        -   `src/lib/validations/trades.ts`: Trade validation schemas
+    -   **Step Dependencies**: Step 21
+    -   **User Instructions**: None
+-   [ ]  Step 24: Implement trade management page
+    -   **Task**: Create page for users to manage their trade requests
+    -   **Files**:
+        -   `src/app/(protected)/trades/page.tsx`: Trade management page
+        -   `src/components/trades/TradesList.tsx`: List of trade requests
+        -   `src/components/trades/TradeCard.tsx`: Trade request card component
+        -   `src/components/trades/TradeActions.tsx`: Trade action buttons (accept/decline)
+        -   `src/server/queries/trades.ts`: Server queries for trade data
+    -   **Step Dependencies**: Step 23
+    -   **User Instructions**: None
+-   [ ]  Step 25: Implement messaging system
+    -   **Task**: Create messaging system for users to communicate about trades
+    -   **Files**:
+        -   `src/app/(protected)/messages/page.tsx`: Messages page
+        -   `src/app/(protected)/messages/[tradeId]/page.tsx`: Conversation page
+        -   `src/components/messages/MessagesList.tsx`: List of message threads
+        -   `src/components/messages/MessageThread.tsx`: Message thread component
+        -   `src/components/messages/MessageForm.tsx`: New message form
+        -   `src/server/actions/messages.ts`: Server actions for messages
+        -   `src/lib/validations/messages.ts`: Message validation schemas
+    -   **Step Dependencies**: Step 24
+    -   **User Instructions**: None
+
+Notifications
+-------------
+
+-   [ ]  Step 26: Implement email notification system
+    -   **Task**: Create email notification service for trade and message notifications
+    -   **Files**:
+        -   `src/lib/email/resend.ts`: Email service configuration (using Resend)
+        -   `src/lib/email/templates/trade-request.ts`: Trade request email template
+        -   `src/lib/email/templates/new-message.ts`: New message email template
+        -   `src/server/api/webhooks/email/route.ts`: Webhook for email events
+    -   **Step Dependencies**: Steps 24, 25
+    -   **User Instructions**: Create a Resend account (free tier), get API key, and add it to your `.env` file
+-   [ ]  Step 27: Create notification triggers
+    -   **Task**: Implement functions to trigger notifications on specific events
+    -   **Files**:
+        -   `src/lib/notifications/triggers.ts`: Notification trigger functions
+        -   `src/lib/notifications/processors.ts`: Notification processing functions
+        -   `src/app/api/notifications/process/route.ts`: API route for processing notifications
+        -   `src/server/actions/notifications.ts`: Server actions for notifications
+    -   **Step Dependencies**: Step 26
+    -   **User Instructions**: None
+
+Content Moderation
+------------------
+
+-   [ ]  Step 28: Implement text content moderation
+    -   **Task**: Create content filtering system for messages and listings
+    -   **Files**:
+        -   `src/lib/moderation/text-filter.ts`: Text moderation utility
+        -   `src/lib/moderation/inappropriate-words.ts`: Inappropriate words list
+        -   `src/middleware/content-filter.ts`: Middleware for filtering content
+    -   **Step Dependencies**: Steps 23, 25
+    -   **User Instructions**: None
+-   [ ]  Step 29: Implement image moderation
+    -   **Task**: Create image moderation for uploaded game photos
+    -   **Files**:
+        -   `src/lib/moderation/image-filter.ts`: Image moderation utility
+        -   `src/server/actions/moderation.ts`: Server actions for moderation
+        -   `src/app/api/moderation/image/route.ts`: API route for image moderation
+    -   **Step Dependencies**: Step 20
+    -   **User Instructions**: None
+
+Dashboard and User Experience
+-----------------------------
+
+-   [ ]  Step 30: Create user dashboard
+    -   **Task**: Implement user dashboard with overview of trades, games, and messages
+    -   **Files**:
+        -   `src/app/(protected)/dashboard/page.tsx`: Dashboard page
+        -   `src/components/dashboard/TradesSummary.tsx`: Trades summary component
+        -   `src/components/dashboard/GamesSummary.tsx`: Games summary component
+        -   `src/components/dashboard/RecentMessages.tsx`: Recent messages component
+        -   `src/server/queries/dashboard.ts`: Server queries for dashboard data
+    -   **Step Dependencies**: Steps 24, 25
+    -   **User Instructions**: None
+-   [ ]  Step 31: Implement trade history and tracking
+    -   **Task**: Create trade history page and components
+    -   **Files**:
+        -   `src/app/(protected)/history/page.tsx`: Trade history page
+        -   `src/components/history/TradeHistoryList.tsx`: Trade history list component
+        -   `src/components/history/TradeHistoryItem.tsx`: Trade history item component
+        -   `src/server/queries/history.ts`: Server queries for trade history
+    -   **Step Dependencies**: Step 24
+    -   **User Instructions**: None
+
+Testing and Deployment
+----------------------
+
+-   [ ]  Step 32: Create unit and integration tests
+    -   **Task**: Implement tests for core functionality
+    -   **Files**:
+        -   `src/tests/auth.test.ts`: Authentication tests
+        -   `src/tests/games.test.ts`: Game management tests
+        -   `src/tests/trades.test.ts`: Trading system tests
+        -   `src/tests/setup.ts`: Test setup configuration
+        -   `jest.config.js`: Jest configuration
+    -   **Step Dependencies**: All previous steps
+    -   **User Instructions**: Install test dependencies with `npm install --save-dev jest @testing-library/react @testing-library/jest-dom jest-environment-jsdom`
+-   [ ]  Step 33: Configure deployment settings
+    -   **Task**: Prepare application for deployment on Vercel
+    -   **Files**:
+        -   `vercel.json`: Vercel configuration
+        -   `src/app/sitemap.ts`: Sitemap generation
+        -   `src/app/robots.ts`: Robots.txt configuration
+        -   `README.md`: Project documentation and deployment instructions
+    -   **Step Dependencies**: All previous steps
+    -   **User Instructions**: Create a Vercel account, connect your GitHub repository, and configure environment variables in the Vercel dashboard before deployment
