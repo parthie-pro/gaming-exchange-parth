@@ -1,4 +1,9 @@
 ---
+description: 
+globs: 
+alwaysApply: false
+---
+---
 description: Follow these rules for all requests.
 globs: 
 ---
@@ -14,7 +19,7 @@ You will see <ai_context> tags in the code. These are context tags that you shou
 
 ## Overview
 
-This is a web app template.
+This is a web app for kids to trade/exchange their games.
 
 ## Tech Stack
 
