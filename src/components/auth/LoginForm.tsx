@@ -1,12 +1,13 @@
 "use client";
 
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { emailSchema, passwordSchema } from "@/lib/validations";
+import { emailSchema, passwordSchema } from "@/lib/validations/index";
 import FormField from "@/components/forms/FormField";
 import FormError from "@/components/forms/FormError";
-import { Button } from "@/components/ui/Button";
+import { Button } from "@/components/ui/button";
 
 const loginSchema = z.object({
   email: emailSchema,
@@ -16,6 +17,7 @@ const loginSchema = z.object({
 type LoginFormData = z.infer<typeof loginSchema>;
 
 export default function LoginForm() {
+  const [errorMessage, setErrorMessage] = useState("");
   const {
     register,
     handleSubmit,
@@ -24,14 +26,20 @@ export default function LoginForm() {
     resolver: zodResolver(loginSchema),
   });
 
-  const onSubmit = (data: LoginFormData) => {
-    // Handle login logic here
-    console.log("Login data submitted:", data);
+  const onSubmit = async (data: LoginFormData) => {
+    try {
+      // Simulate login logic
+      console.log("Logging in with", data);
+      setErrorMessage("");
+    } catch (error) {
+      setErrorMessage("Login failed. Please check your credentials.");
+    }
   };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="bg-white p-6 rounded shadow-md w-full max-w-md">
       <h2 className="text-2xl font-bold mb-4">Login</h2>
+      {errorMessage && <FormError message={errorMessage} />}
       <FormField label="Email">
         <input type="email" {...register("email")} className="border border-gray-300 p-2 rounded w-full" />
         {errors.email && <FormError message={errors.email.message} />}
