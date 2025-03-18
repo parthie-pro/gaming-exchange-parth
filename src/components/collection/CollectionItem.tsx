@@ -1,6 +1,7 @@
 "use client"
 
 import { SelectGame as Game } from "@/db/schema/games"
+import Link from "next/link"
 
 interface CollectionItemProps {
   game: Game
@@ -19,14 +20,27 @@ const CollectionItem: React.FC<CollectionItemProps> = ({ game, onRemove, isRemov
             {game.condition}
           </span>
         )}
+        {game.forTrade && (
+          <span className="ml-2 text-xs bg-green-100 text-green-800 px-2 py-1 rounded-full">
+            Listed for Trade
+          </span>
+        )}
       </div>
-      <button 
-        onClick={() => onRemove(game.id)} 
-        className="text-red-500 hover:text-red-700 px-3 py-1 rounded transition-colors disabled:opacity-50"
-        disabled={isRemoving}
-      >
-        {isRemoving ? 'Removing...' : 'Remove'}
-      </button>
+      <div className="flex space-x-2">
+        <Link 
+          href={`/collection/list?id=${game.id}`}
+          className="text-blue-500 hover:text-blue-700 px-3 py-1 rounded transition-colors"
+        >
+          {game.forTrade ? 'Edit Listing' : 'List for Trade'}
+        </Link>
+        <button 
+          onClick={() => onRemove(game.id)} 
+          className="text-red-500 hover:text-red-700 px-3 py-1 rounded transition-colors disabled:opacity-50"
+          disabled={isRemoving}
+        >
+          {isRemoving ? 'Removing...' : 'Remove'}
+        </button>
+      </div>
     </div>
   )
 }
