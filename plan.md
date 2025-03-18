@@ -150,7 +150,7 @@ Game Management
         -   `src/server/api/igdb/route.ts`: API route to proxy IGDB requests
     -   **Step Dependencies**: Step 2
     -   **User Instructions**: Ensure your IGDB API credentials are correctly set in the `.env` file
--   [ ]  Step 15: Create game search and auto-complete component
+-   [x]  Step 15: Create game search and auto-complete component
     -   **Task**: Build game search component with auto-complete using IGDB API
     -   **Files**:
         -   `src/components/games/GameSearch.tsx`: Game search component
