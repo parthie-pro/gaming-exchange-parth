@@ -19,13 +19,17 @@ import Link from "next/link"
 import { useEffect, useState } from "react"
 import { ThemeSwitcher } from "./utilities/theme-switcher"
 
-const navLinks = [
+const publicLinks = [
   { href: "/about", label: "About" },
   { href: "/pricing", label: "Pricing" },
   { href: "/contact", label: "Contact" }
 ]
 
-const signedInLinks = [{ href: "/todo", label: "Todo" }]
+const signedInLinks = [
+  { href: "/collection", label: "My Collection" },
+  { href: "/collection/list", label: "List Game" },
+  { href: "/todo", label: "Todo" }
+]
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -56,20 +60,22 @@ export default function Header() {
         <div className="flex items-center space-x-2 hover:cursor-pointer hover:opacity-80">
           <Rocket className="size-6" />
           <Link href="/" className="text-xl font-bold">
-            Mckay's App Template
+            Gaming Exchange
           </Link>
         </div>
 
         <nav className="absolute left-1/2 hidden -translate-x-1/2 space-x-2 font-semibold md:flex">
-          {navLinks.map(link => (
-            <Link
-              key={link.href}
-              href={link.href}
-              className="rounded-full px-3 py-1 hover:opacity-80"
-            >
-              {link.label}
-            </Link>
-          ))}
+          <SignedOut>
+            {publicLinks.map(link => (
+              <Link
+                key={link.href}
+                href={link.href}
+                className="rounded-full px-3 py-1 hover:opacity-80"
+              >
+                {link.label}
+              </Link>
+            ))}
+          </SignedOut>
 
           <SignedIn>
             {signedInLinks.map(link => (
@@ -128,17 +134,19 @@ export default function Header() {
                 Home
               </Link>
             </li>
-            {navLinks.map(link => (
-              <li key={link.href}>
-                <Link
-                  href={link.href}
-                  className="block hover:underline"
-                  onClick={toggleMenu}
-                >
-                  {link.label}
-                </Link>
-              </li>
-            ))}
+            <SignedOut>
+              {publicLinks.map(link => (
+                <li key={link.href}>
+                  <Link
+                    href={link.href}
+                    className="block hover:underline"
+                    onClick={toggleMenu}
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </SignedOut>
             <SignedIn>
               {signedInLinks.map(link => (
                 <li key={link.href}>

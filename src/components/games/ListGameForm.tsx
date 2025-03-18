@@ -9,9 +9,12 @@ import { toast } from "sonner"
 import { gameConditionEnum, updateGameSchema } from "@/lib/validations/collection"
 import { updateGameAction } from "@/server/actions/collection"
 import { SelectGame } from "@/db/schema/games"
+import { getImageUrl } from "@/lib/utils/image-upload"
+import { deleteGameImageAction } from "@/server/actions/uploads"
 
 import { ConditionSelect } from "./ConditionSelect"
 import { PlatformSelect } from "./PlatformSelect"
+import { ImageUpload } from "./ImageUpload"
 
 interface ListGameFormProps {
   game: SelectGame
@@ -20,6 +23,9 @@ interface ListGameFormProps {
 export function ListGameForm({ game }: ListGameFormProps) {
   const router = useRouter()
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [imageUrl, setImageUrl] = useState<string | null>(
+    game.coverImageId ? getImageUrl(game.coverImageId) : null
+  )
 
   // Use react-hook-form to handle form validation
   const { register, handleSubmit, setValue, watch, formState: { errors } } = useForm({
@@ -27,7 +33,8 @@ export function ListGameForm({ game }: ListGameFormProps) {
       id: game.id,
       condition: game.condition,
       notes: game.notes || "",
-      forTrade: game.forTrade
+      forTrade: game.forTrade,
+      // We don't include coverImageId in the form - it's handled separately
     },
     resolver: zodResolver(updateGameSchema)
   })
@@ -39,6 +46,26 @@ export function ListGameForm({ game }: ListGameFormProps) {
   // Handle condition select change
   const handleConditionChange = (newCondition: typeof gameConditionEnum._type) => {
     setValue("condition", newCondition)
+  }
+
+  // Handle image upload success
+  const handleImageUploadSuccess = (url: string) => {
+    setImageUrl(url)
+  }
+
+  // Handle image removal
+  const handleRemoveImage = async () => {
+    try {
+      const result = await deleteGameImageAction(game.id)
+      if (!result.isSuccess) {
+        throw new Error(result.message)
+      }
+      setImageUrl(null)
+    } catch (error) {
+      console.error("Error removing image:", error)
+      toast.error("Failed to remove image")
+      throw error // Re-throw to let the ImageUpload component handle the error
+    }
   }
 
   // Handle form submission
@@ -68,6 +95,19 @@ export function ListGameForm({ game }: ListGameFormProps) {
       <div>
         <h3 className="text-lg font-medium">{game.name}</h3>
         <p className="text-sm text-gray-500">Platform: {game.platform}</p>
+      </div>
+      
+      {/* Game Image */}
+      <div>
+        <label className="block text-sm font-medium mb-1">
+          Game Image
+        </label>
+        <ImageUpload 
+          gameId={game.id}
+          existingImageUrl={imageUrl}
+          onUploadSuccess={handleImageUploadSuccess}
+          onRemoveImage={handleRemoveImage}
+        />
       </div>
       
       <div className="space-y-4">

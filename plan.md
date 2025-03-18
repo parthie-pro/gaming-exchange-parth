@@ -169,7 +169,7 @@ Game Management
         -   `src/lib/validations/collection.ts`: Collection validation schemas
     -   **Step Dependencies**: Steps 13, 15
     -   **User Instructions**: None
--   [ ]  Step 17: Create game listing form
+-   [x]  Step 17: Create game listing form
     -   **Task**: Implement form for users to list games for trading
     -   **Files**:
         -   `src/app/(protected)/collection/list/page.tsx`: List game page
@@ -179,7 +179,7 @@ Game Management
         -   `src/server/actions/listings.ts`: Server actions for game listings
     -   **Step Dependencies**: Step 16
     -   **User Instructions**: None
--   [ ]  Step 18: Implement image upload for game listings
+-   [x]  Step 18: Implement image upload for game listings
     -   **Task**: Create image upload functionality for game listings with Supabase storage
     -   **Files**:
         -   `src/components/games/ImageUpload.tsx`: Image upload component

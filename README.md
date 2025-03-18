@@ -64,3 +64,53 @@ NEXT_PUBLIC_POSTHOG_HOST=
 2. Copy `.env.example` to `.env.local` and fill in the environment variables from above
 3. Run `npm install` to install dependencies
 4. Run `npm run dev` to run the app locally
+
+## Supabase Storage Setup
+
+For the image upload functionality to work properly, you need to set up a storage bucket in Supabase with the appropriate security policies:
+
+1. Log in to your Supabase dashboard
+2. Navigate to the Storage section
+3. Create a new bucket named `game-images`
+4. Set the bucket to private
+5. Add the following RLS (Row Level Security) policy:
+
+```sql
+CREATE POLICY "Authenticated users can upload images"
+ON storage.objects
+FOR INSERT
+TO authenticated
+WITH CHECK (bucket_id = 'game-images' AND auth.uid()::text = (storage.foldername(name))[1]);
+```
+
+6. Add policies for reading images:
+
+```sql
+CREATE POLICY "Anyone can view game images"
+ON storage.objects
+FOR SELECT
+USING (bucket_id = 'game-images');
+```
+
+7. Add policy for users to delete their own images:
+
+```sql
+CREATE POLICY "Users can delete their own images"
+ON storage.objects
+FOR DELETE
+USING (bucket_id = 'game-images' AND auth.uid()::text = (storage.foldername(name))[1]);
+```
+
+These policies ensure that:
+- Authenticated users can only upload images to their own folder (user ID)
+- Anyone can view the images
+- Users can only delete their own images
+
+## Features
+
+- User authentication
+- Game collection management
+- List games for trade
+- Upload game images
+- Trade requests and messaging
+- User profiles
