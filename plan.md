@@ -159,7 +159,7 @@ Game Management
         -   `src/hooks/useGameSearch.ts`: Custom hook for game search functionality
     -   **Step Dependencies**: Step 14
     -   **User Instructions**: None
--   [ ]  Step 16: Implement game collection management
+-   [x]  Step 16: Implement game collection management
     -   **Task**: Create game collection management for users to add/remove games
     -   **Files**:
         -   `src/app/(protected)/collection/page.tsx`: Collection management page

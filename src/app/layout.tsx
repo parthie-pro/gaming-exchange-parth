@@ -3,6 +3,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { Toaster } from "sonner";
 import AuthProvider from '@/components/auth/AuthProvider';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
@@ -35,6 +36,7 @@ export default function RootLayout({
         <body
           className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         >
+          <Toaster position="top-right" />
           <Header />
           <Sidebar />
           <MobileNav />
