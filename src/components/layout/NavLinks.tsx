@@ -42,12 +42,12 @@ export default function NavLinks() {
             </Link>
           </li>
           <li>
-            <Link href="/login" className="block p-2 hover:bg-gray-700">
+            <Link href="/sign-in" className="block p-2 hover:bg-gray-700">
               Login
             </Link>
           </li>
           <li>
-            <Link href="/signup" className="block p-2 hover:bg-gray-700">
+            <Link href="/sign-up" className="block p-2 hover:bg-gray-700">
               Sign Up
             </Link>
           </li>

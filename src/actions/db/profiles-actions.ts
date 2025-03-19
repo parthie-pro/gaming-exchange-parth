@@ -11,7 +11,7 @@ import {
   InsertProfile,
   profilesTable,
   SelectProfile
-} from "db/schema/profiles-schema"
+} from "@/db/schema/profiles-schema"
 import { ActionState } from "@/types"
 import { eq } from "drizzle-orm"
 

@@ -10,11 +10,11 @@ import {
   createTodoAction,
   deleteTodoAction,
   updateTodoAction
-} from "@/actions/db/todos-actions"
+} from "actions/db/todos-actions"
 import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Input } from "@/components/ui/input"
-import { SelectTodo } from "@/db/schema"
+import { SelectTodo } from "db/schema"
 import { Trash2 } from "lucide-react"
 import { useState } from "react"
 

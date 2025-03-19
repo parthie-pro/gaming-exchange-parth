@@ -1,13 +1,31 @@
-import { NextRequest, NextResponse } from "next/server";
+/*
+<ai_context>
+Contains middleware for protecting routes, checking user authentication, and redirecting as needed.
+</ai_context>
+*/
 
-export default function middleware(req: NextRequest) {
-  const userId = req.cookies.get("userId"); // Example: Retrieve userId from cookies or session
-  if (!userId) {
-    return NextResponse.redirect("/login");
-  }
-  return NextResponse.next();
-}
+import { authMiddleware } from '@clerk/nextjs'
+
+// This example protects all routes including api/trpc routes
+// Please edit this to allow other routes to be public as needed.
+// See https://clerk.com/docs/references/nextjs/auth-middleware for more information about configuring your middleware
+export default authMiddleware({
+  publicRoutes: [
+    "/sign-in(.*)",
+    "/sign-up(.*)",
+    "/api(.*)",
+    "/about",
+    "/pricing"
+  ],
+  ignoredRoutes: [
+    "/((?!api|trpc))/_next(.*)",
+    "/api/(.*)",
+    "/_next/static(.*)",
+    "/_next/image(.*)",
+    "/favicon.ico(.*)"
+  ]
+});
 
 export const config = {
-  matcher: "/((?!api|_next/static|_next/image|favicon.ico).*)",
-}; 
+  matcher: ["/((?!.+\\.[\\w]+$|_next).*)", "/", "/(api|trpc)(.*)"],
+} 

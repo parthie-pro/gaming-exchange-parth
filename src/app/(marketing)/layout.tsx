@@ -6,7 +6,7 @@ This server layout provides a shared header and basic structure for (marketing) 
 
 "use server"
 
-import Header from "@/components/header"
+import Header from "@/components/layout/Header"
 
 export default async function MarketingLayout({
   children

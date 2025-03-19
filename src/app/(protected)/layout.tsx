@@ -13,7 +13,7 @@ export default async function ProtectedLayout({
   
   // If not authenticated, redirect to login
   if (!userId) {
-    redirect('/login');
+    redirect('/sign-in');
   }
 
   return (

@@ -47,13 +47,13 @@ export default function Navigation() {
               </Link>
             </li>
             <li>
-              <Link href="/login" className="text-white hover:text-gray-300">
+              <Link href="/sign-in" className="text-white hover:text-gray-300">
                 Login
               </Link>
             </li>
             <li>
               <Link 
-                href="/signup"
+                href="/sign-up"
                 className="bg-blue-600 px-3 py-1 rounded text-white hover:bg-blue-700"
               >
                 Sign Up

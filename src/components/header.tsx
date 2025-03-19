@@ -27,7 +27,6 @@ const publicLinks = [
 
 const signedInLinks = [
   { href: "/collection", label: "My Collection" },
-  { href: "/collection/list", label: "List Game" },
   { href: "/todo", label: "Todo" }
 ]
 

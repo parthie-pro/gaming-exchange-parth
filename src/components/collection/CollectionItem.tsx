@@ -29,7 +29,11 @@ const CollectionItem: React.FC<CollectionItemProps> = ({ game, onRemove, isRemov
       <div className="flex space-x-2">
         <Link 
           href={`/collection/list?id=${game.id}`}
-          className="text-blue-500 hover:text-blue-700 px-3 py-1 rounded transition-colors"
+          className={`px-3 py-1 rounded transition-colors ${
+            game.forTrade 
+              ? "text-blue-500 hover:text-blue-700" 
+              : "bg-blue-500 text-white hover:bg-blue-600"
+          }`}
         >
           {game.forTrade ? 'Edit Listing' : 'List for Trade'}
         </Link>

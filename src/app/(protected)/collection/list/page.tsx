@@ -7,6 +7,7 @@ import { db } from "@/db/db"
 import { gamesTable } from "@/db/schema/games"
 import { eq } from "drizzle-orm"
 import { auth } from "@clerk/nextjs/server"
+import Link from "next/link"
 
 // The page takes a game ID as a query parameter
 interface ListGamePageProps {
@@ -20,9 +21,16 @@ export default async function ListGamePage({ searchParams }: ListGamePageProps) 
     return (
       <div className="p-6">
         <h1 className="text-2xl font-bold mb-6">List Game for Trade</h1>
-        <div className="bg-yellow-50 p-4 rounded-md border border-yellow-200">
+        <div className="bg-yellow-50 p-4 rounded-md border border-yellow-200 mb-4">
           <p className="text-yellow-800">No game selected. Please select a game from your collection.</p>
         </div>
+        
+        <Link 
+          href="/collection" 
+          className="inline-block bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition"
+        >
+          Go to My Collection
+        </Link>
       </div>
     )
   }

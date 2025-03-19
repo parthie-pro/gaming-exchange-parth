@@ -7,7 +7,7 @@ Contains server actions related to todos in the DB.
 "use server"
 
 import { db } from "@/db/db"
-import { InsertTodo, SelectTodo, todosTable } from "db/schema/todos-schema"
+import { InsertTodo, SelectTodo, todosTable } from "@/db/schema/todos-schema"
 import { ActionState } from "@/types"
 import { eq } from "drizzle-orm"
 

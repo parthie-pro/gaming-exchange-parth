@@ -7,7 +7,7 @@ Contains server actions related to Stripe.
 import {
   updateProfileAction,
   updateProfileByStripeCustomerIdAction
-} from "@/actions/db/profiles-actions"
+} from "actions/db/profiles-actions"
 import { SelectProfile } from "@/db/schema"
 import { stripe } from "@/lib/stripe"
 import Stripe from "stripe"
