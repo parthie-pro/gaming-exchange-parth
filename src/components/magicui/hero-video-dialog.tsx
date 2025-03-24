@@ -8,6 +8,7 @@ This client component provides a video dialog for the hero section.
 
 import { AnimatePresence, motion } from "framer-motion"
 import { Play, XIcon } from "lucide-react"
+import Image from "next/image"
 import { useState } from "react"
 
 import { cn } from "@/lib/utils"
@@ -89,8 +90,8 @@ export default function HeroVideoDialog({
         className="group relative cursor-pointer"
         onClick={() => setIsVideoOpen(true)}
       >
-        <img
-          src={thumbnailSrc}
+        <Image
+          src={`/${thumbnailSrc}`}
           alt={thumbnailAlt}
           width={1920}
           height={1080}

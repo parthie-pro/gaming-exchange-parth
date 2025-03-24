@@ -4,6 +4,7 @@ The root server layout for the app.
 </ai_context>
 */
 
+import Header from "@/components/header"
 import { Toaster } from "@/components/ui/toaster"
 import { PostHogPageview } from "@/components/utilities/posthog/posthog-pageview"
 import { PostHogUserIdentify } from "@/components/utilities/posthog/posthog-user-identity"
@@ -18,8 +19,8 @@ import "./globals.css"
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: "Mckay's App Template",
-  description: "A full-stack web app template."
+  title: "Gaming Exchange",
+  description: "Trade your video games with other gamers."
 }
 
 export default function RootLayout({
@@ -44,8 +45,11 @@ export default function RootLayout({
           >
             <PostHogUserIdentify />
             <PostHogPageview />
-
-            {children}
+            
+            <div className="flex min-h-screen flex-col">
+              <Header />
+              <div className="flex-1">{children}</div>
+            </div>
 
             <TailwindIndicator />
 
